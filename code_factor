@@ -1,0 +1,81 @@
+
+Hotel::factory()->count(10)->create();
+Gestionnaire::factory()->count(10)->create();
+User::factory()->count(300)->create();
+/*
+creer 100 Reservation pour chaque hotel, avec des users à id aleatoires
+et des Gestionnaire à id aleatoires, avec les syntaxes eloquent
+*/
+$Hotel = Hotel::all();
+foreach ($Hotel as $hotel) {
+    $users = User::all();
+    $Gestionnaires = Gestionnaire::all();
+    for ($i = 0; $i < 100; $i++) {
+        $user = $users[rand(0, 299)];
+        $gestionnaire = $Gestionnaires[rand(0, 9)];
+        $date_debut = date('Y-m-d H:i:s', rand(strtotime('2021-01-01'), strtotime('2021-12-31')));
+        $date_fin = date('Y-m-d H:i:s', rand(strtotime($date_debut), strtotime($date_debut . ' + 1 month')));
+        $prix_total = rand(100, 1000);
+        $status = rand(0, 1);
+        $description = "reservation de " . $user->name . " pour " . $hotel->name;
+        $reservation = new Reservation([
+            'date_debut' => $date_debut,
+            'date_fin' => $date_fin,
+            'description' => $description,
+            'prix_total' => $prix_total,
+            'status' => $status,
+        ]);
+        $reservation->user()->associate($user);
+        $reservation->gestionnaire()->associate($gestionnaire);
+        $reservation->hotel()->associate($hotel);
+        $reservation->save();
+}
+}
+
+Hotel::factory()->count(10)->create();
+//Gestionnaire::factory()->count(10)->create();
+User::factory()->count(300)->create();
+// 5 gestionnaires pour chaque hotel
+
+$Hotel = Hotel::all();
+
+foreach ($Hotel as $hotel) {
+    Gestionnaire::factory()
+            ->count(5)
+            ->for($hotel)
+            ->create();
+}
+
+
+
+
+/*
+creer 100 Reservation pour chaque hotel, avec des users à id aleatoires
+et des Gestionnaire à id aleatoires, avec les syntaxes eloquent
+*/
+//$Hotel = Hotel::all();
+foreach ($Hotel as $hotel) {
+    $users = User::all();
+    $Gestionnaires = Gestionnaire::all();
+    for ($i = 0; $i < 100; $i++) {
+        $user = $users[rand(0, 299)];
+        $gestionnaire = $Gestionnaires[rand(0, 9)];
+        $date_debut = date('Y-m-d H:i:s', rand(strtotime('2021-01-01'), strtotime('2021-12-31')));
+        $date_fin = date('Y-m-d H:i:s', rand(strtotime($date_debut), strtotime($date_debut . ' + 1 month')));
+        $prix_total = rand(100, 1000);
+        $status = rand(0, 1);
+        $description = "reservation de " . $user->name . " pour " . $hotel->name;
+        $reservation = new Reservation([
+            'date_debut' => $date_debut,
+            'date_fin' => $date_fin,
+            'description' => $description,
+            'prix_total' => $prix_total,
+            'status' => $status,
+        ]);
+        $reservation->user()->associate($user);
+        $reservation->gestionnaire()->associate($gestionnaire);
+        $reservation->hotel()->associate($hotel);
+        $reservation->save();
+}
+}
+
