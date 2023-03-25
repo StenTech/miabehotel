@@ -14,6 +14,7 @@ class Gestionnaire extends Model
         'prenoms',
         'email',
         'password',
+        'hotel_id'
     ];
 
     /**
